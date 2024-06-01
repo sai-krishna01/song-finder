@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User and Movie Data Manipulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>User and Movie Data Manipulation</h1>
+    <div class="container">
+        <div class="section" id="adultUsersSection">
+            <h2>Adult Users</h2>
+            <ul id="adultUsersList"></ul>
+        </div>
+        <div class="section" id="userNamesSection">
+            <h2>User Full Names</h2>
+            <ul id="userNamesList"></ul>
+        </div>
+        <div class="section" id="femaleUsersSection">
+            <h2>Female Users</h2>
+            <ul id="femaleUsersList"></ul>
+        </div>
+        <div class="section" id="actionMoviesSection">
+            <h2>Action Movies</h2>
+            <ul id="actionMoviesList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Part I: User Data Array
+        const users = [
+            { firstName: 'John', lastName: 'Doe', age: 25, gender: 'male' },
+            { firstName: 'Jane', lastName: 'Smith', age: 17, gender: 'female' },
+            { firstName: 'Emily', lastName: 'Jones', age: 19, gender: 'female' },
+            { firstName: 'Michael', lastName: 'Brown', age: 16, gender: 'male' },
+            { firstName: 'Sarah', lastName: 'Davis', age: 22, gender: 'female' },
+            { firstName: 'David', lastName: 'Wilson', age: 21, gender: 'male' },
+            { firstName: 'Laura', lastName: 'Taylor', age: 30, gender: 'female' },
+            { firstName: 'James', lastName: 'Anderson', age: 28, gender: 'male' },
+            { firstName: 'Mary', lastName: 'Thomas', age: 27, gender: 'female' },
+            { firstName: 'Robert', lastName: 'Jackson', age: 20, gender: 'male' },
+            { firstName: 'Patricia', lastName: 'White', age: 18, gender: 'female' },
+            { firstName: 'Charles', lastName: 'Harris', age: 23, gender: 'male' },
+            { firstName: 'Linda', lastName: 'Martin', age: 24, gender: 'female' },
+            { firstName: 'Thomas', lastName: 'Thompson', age: 15, gender: 'male' },
+            { firstName: 'Jessica', lastName: 'Garcia', age: 26, gender: 'female' }
+        ];
+
+        // Function to check if a user is an adult (18 or older)
+        const isAdult = (user) => user.age >= 18;
+
+        // Use the filter function to create a new array of adult users
+        const adultUsers = users.filter(isAdult);
+
+        // Function to get the full name of a user
+        const getFullName = (user) => `${user.firstName} ${user.lastName}`;
+
+        // Use the map function to create a new array of user full names
+        const userNames = users.map(getFullName);
+
+        // Part 2: Chaining User Data
+        // Function to filter users by gender
+        const filterByGender = (user, gender) => user.gender === gender;
+
+        // Use chaining to filter female users and then get their full names
+        const femaleUsers = users.filter(user => filterByGender(user, 'female')).map(getFullName);
+
+        // Part 3: Movie Data Array Manipulation
+        const movies = [
+            { title: 'Inception', year: 2010, genre: 'action' },
+            { title: 'Titanic', year: 1997, genre: 'drama' },
+            { title: 'The Dark Knight', year: 2008, genre: 'action' },
+            { title: 'Forrest Gump', year: 1994, genre: 'drama' },
+            { title: 'Avengers: Endgame', year: 2019, genre: 'action' },
+            { title: 'The Lion King', year: 1994, genre: 'animation' },
+            { title: 'Pulp Fiction', year: 1994, genre: 'crime' },
+            { title: 'The Matrix', year: 1999, genre: 'action' },
+            { title: 'Toy Story', year: 1995, genre: 'animation' },
+            { title: 'Gladiator', year: 2000, genre: 'action' }
+        ];
+
+        // Function to filter movies by genre
+        const filterByGenre = (movie, genre) => movie.genre === genre;
+
+        // Use chaining to filter action movies and then get their titles
+        const actionMovies = movies.filter(movie => filterByGenre(movie, 'action')).map(movie => movie.title);
+
+        // Part 4: Integration and Output
+        const combinedResults = {
+            adultUsers,
+            userNames,
+            femaleUsers,
+            actionMovies
+        };
+
+        // Function to display array data in HTML
+        const displayData = (data, elementId) => {
+            const listElement = document.getElementById(elementId);
+            data.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = JSON.stringify(item, null, 2);
+                listElement.appendChild(listItem);
+            });
+        };
+
+        // Display the results in the respective sections
+        displayData(combinedResults.adultUsers, 'adultUsersList');
+        displayData(combinedResults.userNames, 'userNamesList');
+        displayData(combinedResults.femaleUsers, 'femaleUsersList');
+        displayData(combinedResults.actionMovies, 'actionMoviesList');
+    </script>
+</body>
+</html>
